@@ -5,13 +5,6 @@
 # 첫째 줄에 A와 B가 주어집니다.
 # ex) 1 2
 
-def checkInputNums(num1, num2):
-    if num1, num2 > 0 and num1, num2 < 10:
-        return True
-    else:
-        return False
+a, b = map(int, input().split())
 
-while True:
-
-    nums = map(int, input().split())
-    
+print(a + b)
