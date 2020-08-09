@@ -21,33 +21,28 @@ def getNumberOne(num):
     count = 0
 
     while not num == 1:
-        if num % 3 > 1:
-            if num % 2 == 0:
-                num = num / 2
-                count += 1
-            
-            else:
-                num = (num - 1) / 2
-                count += 2
-        
+        if num % 3 == 0:
+            num = num // 3
+            count += 1
+
         elif num % 3 == 1:
-            num = (num - 1) / 3
-            count = count + 2
-        
-        elif num % 3 == 0:
-            num = num / 3
-            count += 1
-        
-        else:
-            num = num / 2
-            count += 1
-    
+            num = (num - 1) // 3
+            count += 2
+
+        elif num % 3 == 2:
+
+            if num % 2 == 0:
+                num = num // 2
+                count += 1
+            else:
+                num = (num - 1) // 2
+                count += 2
+
     return count
 
 while True:
-    n = input()
-    
-    if(checkInputNumber(int(n))):
+    num = int(input())
+    if(checkInputNumber(num)):
         break
 
-print(getNumberOne(int(n)))
+print(getNumberOne(num))
