@@ -7,6 +7,8 @@
 # 삽입과정도 일단 탐색과정을 거친다.
 # 탐색과정을 거쳐서, 주어진 키값과 일치하는 값을 트리에서 발견할 수 없는 경우, 마지막 위치에 값을 삽입
 
+import copy
+
 class Node(object):
     def __init__(self, data):
         self.data = data
@@ -16,49 +18,106 @@ class BinarySearchTree(object):
     def __init__(self):
         self.root = None
 
-    def insert(self, data):
-        self.root = self._insert_data(self.root, data)
+    def search(self, x):
+        p = self.root
 
-    def _insert_data(self, node, data):
-        if node is None:
-            node = Node(data)
+        while p != None:
+            if p.data == x:
+                print(f'값 {x} (을/를) 찾았습니다.')
+                return 0
 
-        else:
-            if node.data > data:
-                node.right = self._insert_data(node.right, data)
-            elif node.data < data:
-                node.left = self._insert_data(node.left, data)
             else:
-                print('중복된 키값이 존재합니다.')
+                if p.data < x:
+                    p = p.left
+                else:
+                    p = p.right
 
-        return node
+        print('값이 없습니다.')
 
-    def find(self, data):
-        self._find_data(self.root, data)
+    def insert(self, x):
+        p = None
+        t = self.root
 
-    def _find_data(self, node, data):
-        if node is None:
-            print('찾으시는 데이터가 없네요.')
-        else:
-            if data == node.data:
-                print(f'찾으시는 데이터 ${data}를 찾았습니다!')
-            elif data > node.data:
-                self._find_data(node.right, data)
-            else:
-                self._find_data(node.left, data)
-            
+        while t != None:
+            if t.data == x: return
+            p = t
+            if p.data < x: t = p.left
+            else: t = p.right
         
+        n = Node(x)
+        if p is not None:
+            if p.data < x: p.left = n
+            else: p.right = n
+        
+        else:
+            self.root = n
+
+    def delete(self, x):
+        p = None 
+        t = self.root
+
+        while t is not None and t.data != x:
+            p = t
+            t = p.left if p.data < x else p.right
+        
+        if t == None:
+            print('값이 없습니다.')
+            return
+        
+        if t.left is None and t.right is None:
+            if p is not None:
+                if p.left == t:
+                    p.left = None
+                
+                else:
+                    p.right = None
+            
+            else:
+                self.root = None
+
+        elif t.left is None or t.right is None:
+            child = t.left if t.left is not None else t.right
+            if p is not None:
+                if p.left == t:
+                    p.left = child
+                else:
+                    p.right = child
+
+            else:
+                self.root = None
+
+        else:
+            succ_p = t
+            succ = t.right
+
+            while succ.left is not None:
+                succ_p = succ
+                succ = succ.left
+
+            if succ_p.left == succ:
+                succ_p.left = succ.right
+            else:
+                succ_p.right = succ.right
+            
+            succ.left = t.left
+            succ.right = t.right
+            
+        del t
+        print(f'값 {x} (이/가) 삭제되었습니다.')
 
 def run():
     bst = BinarySearchTree()
-
+    bst.insert(1)
+    bst.insert(2)
     bst.insert(5)
     bst.insert(7)
-    bst.insert(1)
-    bst.insert(35)
-    bst.insert(23)
+    bst.insert(3)
+    bst.insert(6)
 
-    bst.find(1)
+    bst.search(3)
+
+    bst.delete(7)
+
 
 if __name__ == '__main__':
     run()

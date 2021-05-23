@@ -27,3 +27,4 @@ pque.get()
 pque.put((2, 'Apple'))
 pque.put((1, 'Banana'))
 pque.put((3, 'Cherry'))
+
