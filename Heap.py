@@ -1,45 +1,55 @@
+from enum import Enum
+
 class Heap:
     def __init__(self):
-        self.arr = [0, ]
+        self.arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         self.heap_size = 1
 
     def insert(self, x):
-        self.arr.append(x)
-
-        cnt = self.heap_size
-        while cnt != 1:
-            if self.arr[cnt] > self.arr[cnt // 2]:
-                tmp = self.arr[cnt]
-                self.arr[cnt] = self.arr[cnt // 2]
-                self.arr[cnt // 2] = tmp
-                cnt //= 2
-
-            else:
-                break
-
+        idx = self.heap_size
         self.heap_size += 1
 
+        while idx != 1 and x > self.arr[idx // 2]:
+            self.arr[idx] = self.arr[idx // 2]
+            idx //= 2
+        
+        self.arr[idx] = x
+
     def delete(self):
-        value = self.arr[1]
-        self.arr[1] = self.arr[-1]
+        item = self.arr[1]
+        tmp = self.arr[self.heap_size - 1]
+        self.arr[self.heap_size - 1] = 0
+        self.heap_size -= 1
 
-        cnt = 1
-        while cnt <= self.heap_size:
-            largest_idx = 0
-            if cnt < self.heap_size and self.arr[cnt] > self.arr[cnt + 1]:
-                largest_idx = cnt
-            else:
-                largest_idx = cnt + 1
-            
-            
+        parent = 1
+        child = 2
 
-        return value
+        while child <= self.heap_size:
+            if child < self.heap_size and self.arr[child] > self.arr[child + 1]:
+                child  += 1
+
+            if self.arr[parent] > self.arr[child]: break
+            self.arr[parent] = self.arr[child]
+            parent = child
+            child *= 2
+
+        self.arr[parent] = tmp
+        return item
 
 def run():
     heap = Heap()
     heap.insert(5)
     heap.insert(7)
+    heap.insert(3)
+    heap.insert(6)
+    heap.insert(12)
     print(heap.arr)
+
+    heap.delete()
+    print(heap.arr)
+    heap.delete()
+    print(heap.arr)
+
 
 if __name__ == "__main__":
     run()
