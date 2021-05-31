@@ -1,6 +1,6 @@
 def run():
-    arr = [2, 1, 5, 6, 4, 3, 9, 8]
-    size = 8
+    arr = [2, 1, 5, 6, 4, 3, 9, 8, 10]
+    size = 9
     newArr = cellSort(arr, size)
 
     print(newArr)
@@ -13,7 +13,7 @@ def cellSort(arr, size):
     if gap != 0 and gap % 2 == 0: gap += 1
 
     while gap > 0:
-        for i in range(0, gap):
+        for i in range(gap):
             _arr = insertionSort(_arr, i, size-1, gap)
         
         gap = gap // 2
@@ -23,7 +23,7 @@ def cellSort(arr, size):
 
 def insertionSort(arr, first, last, gap):
     _arr = arr
-    for i in range(first + gap, last, gap):
+    for i in range(first + gap, last + 1, gap):
         key = _arr[i]
 
         for j in range(i - gap, first, -gap):
