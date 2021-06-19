@@ -1,4 +1,5 @@
 {
     "python.linting.pylintEnabled": true,
-    "python.linting.enabled": false
+    "python.linting.enabled": false,
+    "python.pythonPath": "/opt/homebrew/Caskroom/miniforge/base/envs/tensor38/bin/python"
 }
