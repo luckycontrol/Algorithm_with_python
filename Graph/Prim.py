@@ -6,6 +6,8 @@
 # 3. 가장 가중치가 작은 간선의 점을 빼내서 사이클이 발생하는지 확인한다.
 # 4. 사이클이 없으면 해당 간선을 선택. 발생하면 다른 점을 선택한다.
 # 5. 위 과정을 모든 정점을 방문할 때 까지 반복한다.
+from typing import List
+
 
 class Graph:
     def __init__(self, vertices):
@@ -17,7 +19,7 @@ class Graph:
 
         self.selected = []
 
-        self.heap = [{}, ]
+        self.heap: List[dict] = []
 
     def prim(self, start):
 
@@ -27,8 +29,9 @@ class Graph:
         while len(self.selected) < self.V:
             # 정점들과 인접한 것들 중 사이클이 되지 않고 가장 작은 점을 찾는다.
             min_vertex = self.findMinVertex()
-            print(f"{min_vertex['sv']} - {min_vertex['ev']} : {min_vertex['value']} ->")
+            print(f"{min_vertex['sv']} - {min_vertex['ev']} : {min_vertex['v']} ->")
             self.selected.append(min_vertex["ev"])
+
 
     def findMinVertex(self) -> dict:
         for selectedVertex in self.selected:
@@ -36,8 +39,8 @@ class Graph:
                 if value > 0 and vertex not in self.selected:
                     self.insertHeap(startVertex=selectedVertex, endVertex=vertex, value=value)
 
-        min_vertex = self.heap[1]
-        self.heap = [{}, ]
+        min_vertex = self.heap[0]
+        self.heap = []
 
         return min_vertex
 
@@ -49,11 +52,11 @@ class Graph:
         }
 
         self.heap.append(element)
-        idx = len(self.heap)
+        idx = len(self.heap) - 1
 
-        while idx > 1:
-            parent = idx // 2
-            if self.heap[parent] > self.heap[idx]:
+        while idx > 0:
+            parent = (idx - 1) // 2
+            if self.heap[parent]["v"] > self.heap[idx]["v"]:
                 self.heap[parent], self.heap[idx] = self.heap[idx], self.heap[parent]
                 idx = idx // 2
 
