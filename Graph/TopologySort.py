@@ -18,9 +18,18 @@ class Graph:
             stack.append(min_degree)
             selected.append(min_degree)
 
-                
+        while len(stack) > 0:
+            vertex = stack.pop()
+            answer.append(vertex)
+            self.discount_degree(vertex)
 
-        pass
+            min_degrees = self.return_min_degrees(selected=selected)
+            for min_degree in min_degrees:
+                stack.append(min_degree)
+                selected.append(min_degree)
+
+
+        return answer
 
     # 차수 계산
     def cal_degrees(self):
@@ -45,6 +54,12 @@ class Graph:
 
         return min_degrees
 
+    def discount_degree(self, vertex):
+        for i in range(self.V):
+            if self.adj_mat[vertex][i] == 1:
+                self.adj_mat[vertex][i] = 0
+
+
 g = Graph(6)
 
 g.adj_mat = [
@@ -56,3 +71,5 @@ g.adj_mat = [
     [0, 0, 0, 0, 0, 0]
 ]
 
+result = g.topological_sort()
+print(result)
