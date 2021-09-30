@@ -1,3 +1,14 @@
+# distance = 최단거리가 담겨있는 배열
+# found = 선택되었던 정점
+
+# 모든 간선의 가중치는 양수여야 한다.
+
+# 그래프에서 정점을 선택한다.
+# 해당 정점을 u 라고 할 때, distance를 weights[u]로 초기화한다.
+# distance에서 최솟값을 선택한다. 이 정점이 다음으로 이동할 정점이 된다.
+# 정점 u에서 다이렉트로 다른 정점으로 갈 때와 최솟값으로 선택한 정점을 거쳐서 가는 것 중
+# 어느 것이 더 가중치가 적은지 비교하고, 적은 값을 distance에 넣는다.
+
 class Graph:
     def __init__(self, vertices):
         self.V = vertices
@@ -35,6 +46,7 @@ class Graph:
 
         return minPos
 
+    
 
 if __name__ == "__main__":
     g = Graph(7)
@@ -50,4 +62,5 @@ if __name__ == "__main__":
     ]
 
     result = g.shortest_path(0)
+    
     print(result)
